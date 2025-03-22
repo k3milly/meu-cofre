@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="UTF-8">
+  <title>&ast;&ast;Desafio de Deploy&colon; Colocando o Cofre Digital Online&excl;&ast;&ast;</title>
+  <style>
+    /* From extension vscode.github */
+    /*---------------------------------------------------------------------------------------------
+ *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Licensed under the MIT License. See License.txt in the project root for license information.
+ *--------------------------------------------------------------------------------------------*/
+
+    .vscode-dark img[src$=\#gh-light-mode-only],
+    .vscode-light img[src$=\#gh-dark-mode-only],
+    .vscode-high-contrast:not(.vscode-high-contrast-light) img[src$=\#gh-light-mode-only],
+    .vscode-high-contrast-light img[src$=\#gh-dark-mode-only] {
+      display: none;
+    }
+
+    /* From extension marp-team.marp-vscode */
+    #__marp-vscode {
+      all: revert;
+    }
+
+    /* Override VS Code default CSS rules reverting to initial
+   https://github.com/microsoft/vscode/blob/master/src/vs/workbench/contrib/webview/browser/pre/main.js#L53 */
+    body.marp-vscode {
+      padding: 0;
+    }
+
+    body.marp-vscode img {
+      max-width: unset;
+      max-height: unset;
+    }
+
+    body.marp-vscode a,
+    body.marp-vscode a:hover,
+    body.marp-vscode code {
+      color: unset;
+    }
+
+    body.marp-vscode blockquote {
+      background: unset;
+      border-color: unset;
+    }
+
+    @media screen {
+      body.marp-vscode {
+        overflow-y: scroll;
+      }
+
+      #__marp-vscode [data-marp-vscode-slide-wrapper] {
+        margin: 20px;
+      }
+
+      #__marp-vscode svg[data-marpit-svg] {
+        box-shadow: 0 5px 10px rgb(0 0 0 / 25%);
+        display: block;
+        margin: 0;
+      }
+
+      /* Based on https://github.com/microsoft/vscode/blob/master/extensions/markdown-language-features/media/markdown.css */
+      #code-csp-warning {
+        background-color: #444;
+        box-shadow: 1px 1px 1px rgb(0 0 0 / 25%);
+        color: white;
+        cursor: pointer;
+        font-family: sans-serif;
+        font-size: 12px;
+        line-height: 22px;
+        margin: 16px;
+        padding: 6px;
+        position: fixed;
+        right: 0;
+        text-align: center;
+        top: 0;
+        word-wrap: break-word;
+      }
+
+      #code-csp-warning:hover {
+        text-decoration: none;
+        background-color: #007acc;
+        box-shadow: 2px 2px 2px rgb(0 0 0 / 25%);
+      }
+    }
+
+    @media print {
+      body.marp-vscode #code-csp-warning {
+        display: none;
+      }
+    }
+  </style>
+
+  <link rel="stylesheet"
+    href="https://cdn.jsdelivr.net/gh/Microsoft/vscode/extensions/markdown-language-features/media/markdown.css">
+  <link rel="stylesheet"
+    href="https://cdn.jsdelivr.net/gh/Microsoft/vscode/extensions/markdown-language-features/media/highlight.css">
+  <style>
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe WPC', 'Segoe UI', system-ui, 'Ubuntu', 'Droid Sans', sans-serif;
+      font-size: 14px;
+      line-height: 1.6;
+    }
+  </style>
+  <style>
+    .task-list-item {
+      list-style-type: none;
+    }
+
+    .task-list-item-checkbox {
+      margin-left: -20px;
+      vertical-align: middle;
+      pointer-events: none;
+    }
+  </style>
+  <style>
+    :root {
+      --color-note: #0969da;
+      --color-tip: #1a7f37;
+      --color-warning: #9a6700;
+      --color-severe: #bc4c00;
+      --color-caution: #d1242f;
+      --color-important: #8250df;
+    }
+  </style>
+  <style>
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --color-note: #2f81f7;
+        --color-tip: #3fb950;
+        --color-warning: #d29922;
+        --color-severe: #db6d28;
+        --color-caution: #f85149;
+        --color-important: #a371f7;
+      }
+    }
+  </style>
+  <style>
+    .markdown-alert {
+      padding: 0.5rem 1rem;
+      margin-bottom: 16px;
+      color: inherit;
+      border-left: .25em solid #888;
+    }
+
+    .markdown-alert>:first-child {
+      margin-top: 0
+    }
+
+    .markdown-alert>:last-child {
+      margin-bottom: 0
+    }
+
+    .markdown-alert .markdown-alert-title {
+      display: flex;
+      font-weight: 500;
+      align-items: center;
+      line-height: 1
+    }
+
+    .markdown-alert .markdown-alert-title .octicon {
+      margin-right: 0.5rem;
+      display: inline-block;
+      overflow: visible !important;
+      vertical-align: text-bottom;
+      fill: currentColor;
+    }
+
+    .markdown-alert.markdown-alert-note {
+      border-left-color: var(--color-note);
+    }
+
+    .markdown-alert.markdown-alert-note .markdown-alert-title {
+      color: var(--color-note);
+    }
+
+    .markdown-alert.markdown-alert-important {
+      border-left-color: var(--color-important);
+    }
+
+    .markdown-alert.markdown-alert-important .markdown-alert-title {
+      color: var(--color-important);
+    }
+
+    .markdown-alert.markdown-alert-warning {
+      border-left-color: var(--color-warning);
+    }
+
+    .markdown-alert.markdown-alert-warning .markdown-alert-title {
+      color: var(--color-warning);
+    }
+
+    .markdown-alert.markdown-alert-tip {
+      border-left-color: var(--color-tip);
+    }
+
+    .markdown-alert.markdown-alert-tip .markdown-alert-title {
+      color: var(--color-tip);
+    }
+
+    .markdown-alert.markdown-alert-caution {
+      border-left-color: var(--color-caution);
+    }
+
+    .markdown-alert.markdown-alert-caution .markdown-alert-title {
+      color: var(--color-caution);
+    }
+  </style>
+
+</head>
+
+<body class="vscode-body vscode-light">
+  <span id="markdown-mermaid" aria-hidden="true" data-dark-mode-theme="neutral" data-light-mode-theme="neutral"></span>
+  <h1 id="desafio-de-deploy-colocando-o-cofre-digital-online"><strong>Desafio de Deploy: Colocando o Cofre Digital
+      Online!</strong></h1>
+  <hr>
+  <h2 id="objetivos-da-atividade"><strong>Objetivos da Atividade</strong></h2>
+  <ol>
+    <li>Publicar o projeto do cofre digital em um site acessível pela internet.</li>
+    <li>Aprender a usar o GitHub para versionamento de código.</li>
+    <li>Integrar o GitHub com o Netlify para deploy automático.</li>
+    <li>Praticar documentação de projetos com <a href="http://README.html">README.md</a>.</li>
+  </ol>
+  <hr>
+  <h2 id="instruções-gerais"><strong>Instruções Gerais</strong></h2>
+  <h3 id="1-configuração-no-github"><strong>1. Configuração no GitHub</strong></h3>
+  <ul>
+    <li>Crie um repositório público no GitHub chamado <code>cofre-digital</code>.</li>
+    <li>Faça upload de <strong>todos os arquivos do projeto</strong> (HTML, CSS, JavaScript e imagens).</li>
+    <li>Certifique-se de que o arquivo principal seja <code>index.html</code>.</li>
+  </ul>
+  <p><strong>Dica</strong>:</p>
+  <pre><code class="language-bash">git add .
+git commit -m <span class="hljs-string">&quot;Primeiro commit: projeto do cofre digital&quot;</span>
+git push origin main
+</code></pre>
+  <hr>
+  <h3 id="2-deploy-no-netlify"><strong>2. Deploy no Netlify</strong></h3>
+  <ol>
+    <li>Acesse <a href="https://www.netlify.com/">Netlify</a> e faça login com sua conta do GitHub.</li>
+    <li>Clique em <strong>&quot;Add new site&quot; &gt; &quot;Import an existing project&quot;</strong>.</li>
+    <li>Selecione o repositório <code>cofre-digital</code> e autorize a conexão.</li>
+    <li>Deixe as configurações padrão e clique em <strong>&quot;Deploy site&quot;</strong>.</li>
+    <li>Aguarde o deploy finalizar e anote a URL gerada (ex: <code>https://meu-cofre.netlify.app</code>).</li>
+  </ol>
+  <hr>
+  <h3 id="3-documentação-no-readmemd"><strong>3. Documentação no <a href="http://README.html">README.md</a></strong>
+  </h3>
+  <p>Crie um arquivo <code>README.md</code> na raiz do repositório com:</p>
+  <ul>
+    <li>Título do projeto</li>
+    <li>Breve descrição do cofre digital</li>
+    <li>URL do Netlify</li>
+    <li>Tecnologias usadas (ex: HTML, CSS, JavaScript)</li>
+    <li>Instruções para executar localmente (opcional)</li>
+  </ul>
+  <p><strong>Exemplo</strong>:</p>
+  <pre><code class="language-markdown"><span class="hljs-section"># Cofre Digital</span>
+
+Projeto de interface segura para armazenar senhas e mensagens.
+
+<span class="hljs-strong">**Acesso Online**</span>: [<span class="hljs-string">https://meu-cofre.netlify.app</span>](<span class="hljs-link">https://meu-cofre.netlify.app</span>)
+
+<span class="hljs-section">## Tecnologias</span>
+<span class="hljs-bullet">-</span> HTML5
+<span class="hljs-bullet">-</span> CSS3
+<span class="hljs-bullet">-</span> JavaScript
+
+<span class="hljs-section">## Como Executar</span>
+Clone o repositório e abra <span class="hljs-code">`index.html`</span> no navegador.
+</code></pre>
+  <hr>
+  <h2 id="o-que-será-avaliado"><strong>O Que Será Avaliado?</strong></h2>
+  <table>
+    <thead>
+      <tr>
+        <th>Critério</th>
+        <th>Descrição</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Funcionalidade Online</td>
+        <td>O site deve estar acessível via URL do Netlify sem erros.</td>
+      </tr>
+      <tr>
+        <td>Documentação</td>
+        <td><a href="http://README.html">README.md</a> claro e completo com todas as informações solicitadas.</td>
+      </tr>
+      <tr>
+        <td>Integração Contínua</td>
+        <td>Deploy automático configurado corretamente no Netlify.</td>
+      </tr>
+      <tr>
+        <td>Organização do Código</td>
+        <td>Estrutura de pastas e arquivos lógica no GitHub.</td>
+      </tr>
+    </tbody>
+  </table>
+  <hr>
+  <h2 id="dicas-extras"><strong>Dicas Extras</strong></h2>
+  <ul>
+    <li>Teste o site no Netlify após o deploy.</li>
+    <li>Se houver erros, verifique o log de deploy no Netlify.</li>
+    <li>Atualize o repositório se precisar corrigir algo (o Netlify reimplanta automaticamente).</li>
+  </ul>
+  <hr>
+  <h2 id="perguntas-frequentes-faq"><strong>Perguntas Frequentes (FAQ)</strong></h2>
+  <ol>
+    <li>
+      <p><strong>&quot;Meu deploy falhou. O que fazer?&quot;</strong>
+        Verifique se o <code>index.html</code> está na raiz do repositório e se todos os arquivos foram commitados.</p>
+    </li>
+    <li>
+      <p><strong>&quot;Posso usar outro serviço além do Netlify?&quot;</strong>
+        Não para esta atividade. O objetivo é aprender a usar a integração GitHub + Netlify.</p>
+    </li>
+    <li>
+      <p><strong>&quot;Preciso comprimir os arquivos?&quot;</strong>
+        Não. O Netlify lida com arquivos brutos. Mantenha a estrutura original.</p>
+    </li>
+  </ol>
+  <hr>
+  <h2 id="referências-úteis"><strong>Referências Úteis</strong></h2>
+  <ul>
+    <li><a href="https://docs.github.com/pt/get-started">Guia GitHub para Iniciantes</a></li>
+    <li><a href="https://docs.netlify.com/">Documentação do Netlify</a></li>
+    <li><a href="https://www.makeareadme.com/">Como Escrever um Bom README</a></li>
+  </ul>
+  <hr>
+  <h2 id="entrega-da-atividade"><strong>Entrega da Atividade</strong></h2>
+  <ul>
+    <li><strong>Prazo de Entrega</strong>: 2025-03-24T00:00:00-03:00</li>
+    <li><strong>Formato de Envio</strong>: Link do repositório GitHub no Moodle.</li>
+
+  </ul>
+  <hr>
+  <!--
+### **Para Professores:**
+
+- Sugira que os alunos compartilhem os links no canal da turma para teste mútuo.
+- Se possível, demonstre o processo uma vez em aula antes da atividade.
+
+-->
+</body>
+
+</html>
